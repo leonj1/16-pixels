@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - FREEPIK_API_KEY=${FREEPIK_API_KEY}
+      - RUNWAY_API_KEY=${RUNWAY_API_KEY}
+      - LEONARDO_API_KEY=${LEONARDO_API_KEY}
+      - REPLICATE_API_TOKEN=${REPLICATE_API_TOKEN}
+      - HUGGINGFACE_TOKEN=${HUGGINGFACE_TOKEN}
+      - STABILITY_API_KEY=${STABILITY_API_KEY}
+    volumes:
+      - ./output:/app/output
+    command: ["--help"]  # Default to showing help
+
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    environment:
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - FREEPIK_API_KEY=${FREEPIK_API_KEY}
+      - RUNWAY_API_KEY=${RUNWAY_API_KEY}
+      - LEONARDO_API_KEY=${LEONARDO_API_KEY}
+      - REPLICATE_API_TOKEN=${REPLICATE_API_TOKEN}
+      - HUGGINGFACE_TOKEN=${HUGGINGFACE_TOKEN}
+      - STABILITY_API_KEY=${STABILITY_API_KEY}
+    volumes:
+      - ./test-output:/app/test-output
+      - ./tests:/app/tests
