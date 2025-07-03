@@ -2,6 +2,7 @@ import os
 from typing import Optional
 from pydantic_ai import Agent
 from pydantic_ai.models.gemini import GeminiModel
+from pydantic_ai.providers.google_gla import GoogleGLAProvider
 from .models import ImageQueryClassification
 
 
@@ -11,7 +12,9 @@ class QueryClassifier:
         if not api_key:
             raise ValueError("Google API key is required. Set GOOGLE_API_KEY environment variable.")
         
-        self.model = GeminiModel('gemini-2.5-flash')
+        # Explicitly pass the API key to the provider
+        provider = GoogleGLAProvider(api_key=api_key)
+        self.model = GeminiModel('gemini-2.5-flash', provider=provider)
         
         self.agent = Agent(
             self.model,
